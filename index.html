@@ -1,13 +1,322 @@
 <!DOCTYPE html>
-
-<html>
+<html lang="ar" dir="rtl">
 <head>
-  <meta http-equiv="CONTENT-TYPE" content="text/html; charset=UTF-8">
-  <title>Hello, World!</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DONATIKA - مش هتقدر تاكل واحدة بس</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{--gold:#C9A227;--gold-light:#E8D5A3;--gold-dark:#A67C00;--bronze:#B87333;--black:#0d0d0d;--black-light:#1a1a1a;--card:#141414;--gray:#888;--green:#006633;--red:#f44336}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Tajawal',sans-serif;background:var(--black);color:#fff}
+.header{position:fixed;top:0;width:100%;background:rgba(13,13,13,.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(201,162,39,.2);z-index:1000;padding:10px 20px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:22px;font-weight:900;background:linear-gradient(135deg,var(--gold),var(--gold-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:flex;align-items:center;gap:10px}
+.logo::before{content:"👑";font-size:28px;-webkit-text-fill-color:var(--gold)}
+.header-actions{display:flex;gap:10px}
+.btn{background:var(--card);border:1px solid var(--gold-dark);color:var(--gold);padding:8px 14px;border-radius:50px;cursor:pointer;font-family:'Tajawal';font-size:12px;font-weight:700}
+.btn:hover{background:var(--gold);color:var(--black)}
+.count{position:absolute;top:-6px;right:-6px;background:var(--red);color:#fff;font-size:10px;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800}
+.hero{margin-top:60px;padding:40px 20px;text-align:center;background:linear-gradient(180deg,rgba(201,162,39,.08),transparent)}
+.hero::before{content:"🍩";font-size:80px;display:block;margin-bottom:10px}
+.hero h1{font-size:36px;font-weight:900;background:linear-gradient(135deg,var(--gold),var(--gold-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
+.hero p{color:var(--gold-light);margin-bottom:8px;font-size:17px}
+.hero .sub{color:var(--bronze);font-size:14px;margin-bottom:15px}
+.feat{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.feat span{background:rgba(201,162,39,.1);border:1px solid rgba(201,162,39,.3);padding:6px 14px;border-radius:50px;font-size:13px;color:var(--gold-light)}
+.menu{max-width:1200px;margin:0 auto;padding:20px}
+.cat{margin-bottom:35px}
+.cat-h{display:flex;align-items:center;gap:10px;margin-bottom:18px;padding-bottom:10px;border-bottom:2px solid rgba(201,162,39,.3)}
+.cat-h h2{color:var(--gold);font-size:22px}
+.cat-n{background:var(--gold);color:var(--black);width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:15px}
+.card{background:var(--card);border:1px solid rgba(201,162,39,.15);border-radius:16px;overflow:hidden;transition:all .3s}
+.card:hover{transform:translateY(-5px);border-color:var(--gold);box-shadow:0 12px 35px rgba(201,162,39,.2)}
+.img{height:150px;background:linear-gradient(135deg,#1f1f1f,#0f0f0f);display:flex;align-items:center;justify-content:center;font-size:55px;position:relative}
+.badge{position:absolute;top:8px;left:8px;padding:3px 10px;border-radius:15px;font-size:11px;font-weight:800}
+.badge.s{background:linear-gradient(135deg,var(--gold),var(--bronze));color:var(--black)}
+.badge.g{background:linear-gradient(135deg,var(--bronze),var(--gold-dark));color:#fff}
+.info{padding:15px}
+.name{font-size:15px;font-weight:700;margin-bottom:4px}
+.price{font-size:20px;font-weight:900;color:var(--gold);margin-bottom:10px}
+.price span{font-size:12px;color:var(--gray)}
+.details{font-size:11px;color:var(--gray);margin-bottom:8px;line-height:1.5}
+.box{border:2px solid rgba(201,162,39,.3);background:linear-gradient(135deg,var(--card),rgba(201,162,39,.05))}
+.add{width:100%;background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:var(--black);border:none;padding:10px;border-radius:10px;font-family:'Tajawal';font-size:14px;font-weight:800;cursor:pointer}
+.add:hover{transform:scale(1.02);box-shadow:0 5px 20px rgba(201,162,39,.4)}
+.qty{display:flex;align-items:center;justify-content:center;gap:10px;background:var(--black-light);border-radius:10px;padding:5px}
+.qty button{width:28px;height:28px;border-radius:50%;border:1px solid var(--gold);background:transparent;color:var(--gold);cursor:pointer;font-size:14px}
+.qty span{font-size:16px;font-weight:800;min-width:20px;text-align:center}
+.cart{position:fixed;top:0;right:-100%;width:100%;max-width:400px;height:100vh;background:var(--black-light);border-left:2px solid var(--gold-dark);z-index:2000;transition:right .3s;display:flex;flex-direction:column}
+.cart.open{right:0}
+.overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);z-index:1999;display:none}
+.overlay.show{display:block}
+.c-head{padding:15px;border-bottom:1px solid rgba(201,162,39,.2);display:flex;justify-content:space-between;align-items:center;color:var(--gold)}
+.c-head button{background:none;border:none;color:var(--gray);font-size:20px;cursor:pointer}
+.c-items{flex:1;overflow-y:auto;padding:15px}
+.empty{text-align:center;padding:40px;color:var(--gray)}
+.item{background:var(--card);border-radius:10px;padding:12px;margin-bottom:10px;display:flex;gap:10px;align-items:center}
+.item-img{width:45px;height:45px;border-radius:8px;background:linear-gradient(135deg,#2a2a2a,#1a1a1a);display:flex;align-items:center;justify-content:center;font-size:22px}
+.item-info{flex:1}
+.item-info div:first-child{font-size:13px;font-weight:700}
+.item-info div:nth-child(2){color:var(--gold);font-size:13px;font-weight:800}
+.item-qty{display:flex;gap:6px;margin-top:4px}
+.item-qty button{width:22px;height:22px;border-radius:50%;border:1px solid var(--gold-dark);background:transparent;color:var(--gold);cursor:pointer;font-size:10px}
+.rm{color:var(--red);background:none;border:none;cursor:pointer;font-size:16px}
+.c-foot{padding:15px;border-top:1px solid rgba(201,162,39,.2)}
+.total{display:flex;justify-content:space-between;margin-bottom:10px;font-size:16px}
+.total span:last-child{color:var(--gold);font-weight:900;font-size:22px}
+.pay-btn{width:100%;background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:var(--black);border:none;padding:12px;border-radius:12px;font-family:'Tajawal';font-size:16px;font-weight:900;cursor:pointer}
+.pay-btn:disabled{opacity:.5}
+.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.85);z-index:3000;display:none;align-items:center;justify-content:center;padding:20px}
+.modal.show{display:flex}
+.m-content{background:var(--black-light);border:2px solid var(--gold-dark);border-radius:20px;padding:25px;max-width:450px;width:100%;max-height:90vh;overflow-y:auto;position:relative}
+.m-head{text-align:center;margin-bottom:20px}
+.m-head h2{color:var(--gold);font-size:22px}
+.m-head p{color:var(--gray);font-size:13px}
+.close{position:absolute;top:15px;left:15px;background:none;border:none;color:var(--gray);font-size:20px;cursor:pointer}
+.pay-m{display:flex;flex-direction:column;gap:10px;margin-bottom:15px}
+.pay-o{background:var(--card);border:2px solid rgba(201,162,39,.2);border-radius:12px;padding:12px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:all .3s}
+.pay-o:hover{border-color:var(--gold)}
+.pay-o.sel{border-color:var(--gold);background:rgba(201,162,39,.1)}
+.pay-o i{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff}
+.pay-o .et{background:linear-gradient(135deg,var(--green),#00A651)}
+.pay-o .wa{background:linear-gradient(135deg,#25D366,#128C7E)}
+.pay-o div:nth-child(2){flex:1}
+.pay-o div:nth-child(2) h3{font-size:15px}
+.pay-o div:nth-child(2) p{font-size:12px;color:var(--gray)}
+.check{width:20px;height:20px;border:2px solid var(--gray);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px}
+.pay-o.sel .check{background:var(--gold);border-color:var(--gold);color:var(--black)}
+.etisalat-d{background:var(--card);border:1px solid rgba(0,102,51,.3);border-radius:12px;padding:15px;margin-bottom:15px;text-align:center}
+.etisalat-d h3{color:var(--green);margin-bottom:10px;font-size:16px}
+.et-num{background:rgba(0,102,51,.1);border:2px dashed var(--green);border-radius:10px;padding:10px;font-size:18px;font-weight:900;color:#fff;cursor:pointer;margin-bottom:10px}
+.et-num i{color:var(--green);margin-left:6px}
+.note{font-size:11px;color:var(--gray);line-height:1.6}
+.copy{background:var(--green);color:#fff;border:none;padding:8px 16px;border-radius:8px;font-family:'Tajawal';font-size:12px;font-weight:700;cursor:pointer;margin-top:8px}
+.summary{background:var(--card);border-radius:12px;padding:15px;margin-bottom:15px}
+.summary h3{color:var(--gold);font-size:15px;margin-bottom:10px;border-bottom:1px solid rgba(201,162,39,.2);padding-bottom:8px}
+.s-item{display:flex;justify-content:space-between;margin-bottom:6px;font-size:12px}
+.s-item.t{border-top:1px solid rgba(201,162,39,.2);padding-top:8px;margin-top:8px;font-size:16px;font-weight:900}
+.s-item.t span:last-child{color:var(--gold)}
+.form-group{margin-bottom:12px}
+.form-group label{display:block;margin-bottom:5px;color:var(--gold-light);font-size:12px;font-weight:600}
+.form-group input,.form-group select,.form-group textarea{width:100%;background:var(--card);border:1px solid rgba(201,162,39,.3);border-radius:8px;padding:10px;color:#fff;font-family:'Tajawal';font-size:14px}
+.form-group textarea{resize:vertical;min-height:60px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.submit{width:100%;background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:var(--black);border:none;padding:12px;border-radius:12px;font-family:'Tajawal';font-size:16px;font-weight:900;cursor:pointer;margin-top:8px}
+.success{text-align:center;padding:20px}
+.success .icon{width:60px;height:60px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;margin:0 auto 15px;font-size:30px;color:#fff}
+.success h2{color:var(--gold);margin-bottom:10px}
+.success p{color:var(--gray);margin-bottom:20px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--card);border:1px solid var(--gold);color:var(--gold);padding:12px 20px;border-radius:50px;font-weight:700;z-index:4000;opacity:0;transition:all .3s}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.footer{background:var(--black-light);border-top:1px solid rgba(201,162,39,.2);padding:30px 20px;text-align:center;margin-top:40px}
+.footer::before{content:"👑";font-size:50px;display:block;margin-bottom:10px}
+.footer h2{color:var(--gold);font-size:22px;margin-bottom:10px}
+.footer p{color:var(--gray);font-size:14px;margin-bottom:6px}
+.footer p i{color:var(--gold);margin-left:6px}
+.social{display:flex;justify-content:center;gap:12px;margin-top:15px}
+.social a{width:38px;height:38px;border-radius:50%;background:var(--card);border:1px solid rgba(201,162,39,.3);display:flex;align-items:center;justify-content:center;color:var(--gold);text-decoration:none}
+.note-box{background:rgba(201,162,39,.05);border:1px solid rgba(201,162,39,.2);border-radius:10px;padding:12px;margin:15px 0;text-align:center;font-size:13px;color:var(--gold-light)}
+@media(max-width:768px){.hero h1{font-size:26px}.grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}.cart{right:-100%}.row{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
-  <h1>
-    Hello, World!
-  </h1>
+
+<header class="header">
+<div class="logo">DONATIKA</div>
+<div class="header-actions">
+<button class="btn" onclick="openRes()"><i class="fas fa-calendar-check"></i> احجز</button>
+<button class="btn" onclick="toggleCart()" style="position:relative"><i class="fas fa-shopping-bag"></i> السلة <span class="count" id="cc" style="display:none">0</span></button>
+</div>
+</header>
+
+<section class="hero">
+<h1>DONATIKA</h1>
+<p>"😊 مش هتقدر تاكل واحدة بس"</p>
+<p class="sub">🔥 طازة يومياً، مكونات فاخرة، طعم يجنن</p>
+<div class="feat">
+<span><i class="fas fa-fire"></i> طعم يجنن</span>
+<span><i class="fas fa-gem"></i> مكونات فاخرة</span>
+<span><i class="fas fa-bread-slice"></i> طازة يومياً</span>
+</div>
+</section>
+
+<div class="menu">
+
+<div class="cat">
+<div class="cat-h"><span class="cat-n">1</span><span style="font-size:28px">🍩</span><h2>دوناتس كلاسيك</h2></div>
+<div class="grid" id="c1"></div>
+</div>
+
+<div class="cat">
+<div class="cat-h"><span class="cat-n">2</span><span style="font-size:28px">🌀</span><h2>سينامون</h2></div>
+<div class="grid" id="c2"></div>
+</div>
+
+<div class="cat">
+<div class="cat-h"><span class="cat-n">3</span><span style="font-size:28px">🥐</span><h2>دوناتس بامبوليني</h2></div>
+<div class="grid" id="c3"></div>
+</div>
+
+<div class="cat">
+<div class="cat-h"><span class="cat-n">4</span><span style="font-size:28px">🎁</span><h2>بوكسات DONATIKA</h2></div>
+<div class="grid" id="c4"></div>
+</div>
+
+</div>
+
+<div class="overlay" id="ov" onclick="toggleCart()"></div>
+<div class="cart" id="cart">
+<div class="c-head"><h3><i class="fas fa-shopping-bag"></i> السلة</h3><button onclick="toggleCart()"><i class="fas fa-times"></i></button></div>
+<div class="c-items" id="ci"><div class="empty"><i class="fas fa-shopping-basket" style="font-size:40px;display:block;margin-bottom:10px"></i><p>السلة فاضية</p></div></div>
+<div class="c-foot">
+<div class="total"><span>الإجمالي:</span><span id="ct">0 ج.م</span></div>
+<button class="pay-btn" id="pb" onclick="openPay()" disabled>إتمام الطلب والدفع</button>
+</div>
+</div>
+
+<div class="modal" id="pm">
+<div class="m-content">
+<button class="close" onclick="closePay()"><i class="fas fa-times"></i></button>
+<div class="m-head"><h2>💳 إتمام الطلب</h2><p>اختار طريقة الدفع</p></div>
+<div class="summary"><h3>📋 ملخص الطلب</h3><div id="si"></div><div class="s-item t"><span>الإجمالي:</span><span id="st">0 ج.م</span></div></div>
+<div class="pay-m">
+<div class="pay-o sel" onclick="selPay('et')" id="m-et"><i class="fas fa-money-bill-wave et"></i><div><h3>اتصالات كاش</h3><p>دفع إلكتروني فوري</p></div><div class="check"><i class="fas fa-check"></i></div></div>
+<div class="pay-o" onclick="selPay('wa')" id="m-wa"><i class="fab fa-whatsapp wa"></i><div><h3>واتساب</h3><p>دفع عند الاستلام</p></div><div class="check"><i class="fas fa-check"></i></div></div>
+</div>
+<div id="ed">
+<div class="etisalat-d">
+<h3>📱 ادفع على اتصالات كاش</h3>
+<div class="et-num" onclick="copyN()"><i class="fas fa-copy"></i> 01151770039</div>
+<button class="copy" onclick="copyN()">نسخ الرقم</button>
+<p class="note">1. افتح تطبيق اتصالات كاش<br>2. اعمل تحويل على الرقم اللي فوق<br>3. اكتب اسمك في البيان<br>4. بعد الدفع، اضغط "تم الدفع"</p>
+</div>
+</div>
+<div class="form-group"><label>الاسم</label><input type="text" id="cn" placeholder="اسمك الكريم" required></div>
+<div class="form-group"><label>رقم التليفون</label><input type="tel" id="cp" placeholder="01xxxxxxxxx" required></div>
+<div class="form-group"><label>العنوان / ملاحظات</label><textarea id="ca" placeholder="عنوانك..."></textarea></div>
+<button class="submit" onclick="confPay()"><i class="fas fa-check-circle"></i> <span id="cb">تم الدفع - إرسال الطلب</span></button>
+</div>
+</div>
+
+<div class="modal" id="rm">
+<div class="m-content">
+<button class="close" onclick="closeRes()"><i class="fas fa-times"></i></button>
+<div class="m-head"><h2>🎂 احجز مناسبتك</h2></div>
+<form onsubmit="subRes(event)">
+<div class="form-group"><label>الاسم</label><input type="text" id="rn" required></div>
+<div class="row">
+<div class="form-group"><label>التليفون</label><input type="tel" id="rp" required></div>
+<div class="form-group"><label>المناسبة</label><select id="rt" required><option value="">اختار</option><option value="birthday">عيد ميلاد 🎂</option><option value="engagement">خطوبة 💍</option><option value="wedding">فرح 👰</option><option value="corporate">شركة 🏢</option><option value="other">تانية</option></select></div>
+</div>
+<div class="row">
+<div class="form-group"><label>التاريخ</label><input type="date" id="rd" required></div>
+<div class="form-group"><label>الضيوف</label><input type="number" id="rg" min="1" required></div>
+</div>
+<div class="form-group"><label>تفاصيل</label><textarea id="rde"></textarea></div>
+<button type="submit" class="submit">إرسال الحجز</button>
+</form>
+</div>
+</div>
+
+<div class="modal" id="sm">
+<div class="m-content" style="text-align:center">
+<div class="success"><div class="icon"><i class="fas fa-check"></i></div><h2>تم إرسال طلبك!</h2><p>هنتواصل معاك قريب</p><button class="submit" onclick="closeSuc()">تمام</button></div>
+</div>
+</div>
+
+<div class="toast" id="toast">تم الإضافة للسلة!</div>
+
+<footer class="footer">
+<h2>DONATIKA</h2>
+<p><i class="fab fa-whatsapp"></i> للحجز واتساب: 01152766398</p>
+<p><i class="fas fa-money-bill-wave"></i> اتصالات كاش: 01151770039</p>
+<div class="note-box">"بوكسات وكميات لأي عدد، احجز قبلها بيوم"</div>
+<div class="social">
+<a href="#"><i class="fab fa-instagram"></i></a>
+<a href="#"><i class="fab fa-facebook"></i></a>
+<a href="#"><i class="fab fa-tiktok"></i></a>
+</div>
+</footer>
+
+<script>
+const data={
+c1:[
+{id:'a1',n:'دونات شوكولاتة',p:55,i:'🍫'},
+{id:'a2',n:'دونات جليز',p:55,i:'🍩'},
+{id:'a3',n:'دونات شوكولاتة وايت',p:70,i:'🤍'},
+{id:'a4',n:'دونات كراميل',p:70,i:'🍮'},
+{id:'a5',n:'دونات نوتيلا',p:60,i:'🌰'},
+{id:'a6',n:'دونات لوتس',p:60,i:'🍪'},
+{id:'a7',n:'دونات بستاشيو',p:90,i:'🥜'},
+{id:'a8',n:'دونات أوريو',p:70,i:'🖤'},
+{id:'a9',n:'دونات فيريرو روشيه',p:80,i:'🥇'},
+{id:'a10',n:'دونات سينابون شوجر',p:75,i:'🍬'},
+{id:'a11',n:'دونات كيندر',p:75,i:'🍫'},
+{id:'a12',n:'دونات ستروبري برجر',p:85,i:'🍓'},
+{id:'a13',n:'دونات رافايلو',p:75,i:'🥥'},
+{id:'a14',n:'⭐ دونات تشيز بلو بيري',p:80,i:'🫐',b:'s'},
+{id:'a15',n:'دونات تشيز ستروبيري',p:80,i:'🍓'}
+],
+c2:[
+{id:'b1',n:'سينامون كلاسيك',p:90,i:'🌀'},
+{id:'b2',n:'سينامون كراميل',p:100,i:'🍮'},
+{id:'b3',n:'سينامون نوتيلا',p:100,i:'🌰'},
+{id:'b4',n:'سينامون لوتس',p:100,i:'🍪'},
+{id:'b5',n:'سينامون كيندر',p:110,i:'🍫'},
+{id:'b6',n:'⭐ سينامون بستاشيو',p:120,i:'🥜',b:'s'},
+{id:'b7',n:'سينامون كب',p:130,i:'🌀'},
+{id:'b8',n:'فته سينامون',p:180,i:'🍽️'},
+{id:'b9',n:'سينامون تارت',p:450,i:'🥧'}
+],
+c3:[
+{id:'c1',n:'نوتيلا',p:70,i:'🌰'},
+{id:'c2',n:'لوتس',p:75,i:'🍪'},
+{id:'c3',n:'نوتيلا وايت',p:75,i:'🤍'},
+{id:'c4',n:'باستيري كريم',p:70,i:'🥐'},
+{id:'c5',n:'كيندر',p:80,i:'🍫'},
+{id:'c6',n:'كريم بورليه',p:80,i:'🍮'},
+{id:'c7',n:'أوريو',p:80,i:'🖤'},
+{id:'c8',n:'تشيز بلو بيري',p:85,i:'🫐'},
+{id:'c9',n:'تشيز ستروبيري',p:85,i:'🍓'},
+{id:'c10',n:'فواكه',p:80,i:'🍓'},
+{id:'c11',n:'فيريرو روشيه',p:85,i:'🥇'},
+{id:'c12',n:'رافايلو',p:80,i:'🥥'},
+{id:'c13',n:'⭐ بستاشيو',p:95,i:'🥜',b:'s'},
+{id:'c14',n:'⭐ تريند دبي',p:130,i:'✨',b:'s'}
+],
+c4:[
+{id:'d1',n:'بوكس بامبوليني ميني',p:350,i:'🥐',box:true,d:'12 قطعة - 350 ج.م | 24 قطعة - 680 ج.م'},
+{id:'d2',n:'بوكس دوناتس لارج',p:280,i:'🍩',box:true,d:'4 قطع - 280 ج.م | 8 قطع - 550 ج.م'},
+{id:'d3',n:'بوكس سينامون ميني',p:400,i:'🌀',box:true,d:'12 قطعة - 400 ج.م'},
+{id:'d4',n:'بوكس عيد ميلاد',p:700,i:'🎂',box:true,d:'بوكس مخصوص للمناسبات'},
+{id:'d5',n:'بوكس دوناتيكا ميكس',p:400,i:'🎁',box:true,d:'دونات + سينامون - 400 ج.م'}
+]
+};
+let cart=[],sp='et';
+function init(){render('c1',data.c1);render('c2',data.c2);render('c3',data.c3);render('c4',data.c4);}
+function render(cid,list){document.getElementById(cid).innerHTML=list.map(p=>`<div class="card ${p.box?'box':''}"><div class="img">${p.b?`<span class="badge ${p.b}">${p.b=='s'?'⭐ مميز':'🎁 بوكس'}</span>`:''}<span style="z-index:1">${p.i}</span></div><div class="info"><div class="name">${p.n}</div>${p.d?`<div class="details">${p.d}</div>`:''}<div class="price">${p.p} <span>ج.م</span></div><div id="k-${p.id}"><button class="add" onclick="add('${p.id}','${cid}')"><i class="fas fa-plus"></i> أضف للسلة</button></div></div></div>`).join('');}
+function add(pid,cid){const p=data[cid].find(x=>x.id===pid);const e=cart.find(x=>x.id===pid);if(e){e.q++}else{cart.push({id:p.id,n:p.n,p:p.p,i:p.i,q:1})}upCart();upCtrl(pid,cid);showT(`تم إضافة ${p.n}`);}
+function upCtrl(pid,cid){const c=cart.find(x=>x.id===pid);const e=document.getElementById(`k-${pid}`);if(c){e.innerHTML=`<div class="qty"><button onclick="uq('${pid}',-1,'${cid}')">-</button><span>${c.q}</span><button onclick="uq('${pid}',1,'${cid}')">+</button></div>`}else{e.innerHTML=`<button class="add" onclick="add('${pid}','${cid}')"><i class="fas fa-plus"></i> أضف للسلة</button>`}}
+function uq(pid,ch,cid){const i=cart.find(x=>x.id===pid);if(i){i.q+=ch;if(i.q<=0)cart=cart.filter(x=>x.id!==pid);upCart();upCtrl(pid,cid);}}
+function rm(pid){cart=cart.filter(x=>x.id!==pid);upCart();init();}
+function upCart(){const cc=document.getElementById('cc');const ci=document.getElementById('ci');const ct=document.getElementById('ct');const pb=document.getElementById('pb');const t=cart.reduce((s,x)=>s+x.q,0);const tp=cart.reduce((s,x)=>s+(x.p*x.q),0);if(t>0){cc.style.display='flex';cc.textContent=t;pb.disabled=false;}else{cc.style.display='none';pb.disabled=true;}ct.textContent=`${tp} ج.م`;if(cart.length===0){ci.innerHTML=`<div class="empty"><i class="fas fa-shopping-basket" style="font-size:40px;display:block;margin-bottom:10px"></i><p>السلة فاضية</p></div>`}else{ci.innerHTML=cart.map(x=>`<div class="item"><div class="item-img">${x.i}</div><div class="item-info"><div>${x.n}</div><div>${x.p} ج.م</div><div class="item-qty"><button onclick="uc('${x.id}',-1)">-</button><span>${x.q}</span><button onclick="uc('${x.id}',1)">+</button></div></div><button class="rm" onclick="rm('${x.id}')"><i class="fas fa-trash"></i></button></div>`).join('');}}
+function uc(pid,ch){const i=cart.find(x=>x.id===pid);if(i){i.q+=ch;if(i.q<=0)cart=cart.filter(x=>x.id!==pid);upCart();init();}}
+function toggleCart(){document.getElementById('cart').classList.toggle('open');document.getElementById('ov').classList.toggle('show');}
+function openPay(){if(cart.length===0)return;const tp=cart.reduce((s,x)=>s+(x.p*x.q),0);document.getElementById('si').innerHTML=cart.map(x=>`<div class="s-item"><span>${x.n} × ${x.q}</span><span>${x.p*x.q} ج.م</span></div>`).join('');document.getElementById('st').textContent=`${tp} ج.م`;document.getElementById('pm').classList.add('show');toggleCart();}
+function closePay(){document.getElementById('pm').classList.remove('show');}
+function selPay(m){sp=m;document.querySelectorAll('.pay-o').forEach(e=>e.classList.remove('sel'));document.getElementById('m-'+m).classList.add('sel');const d=document.getElementById('ed');const b=document.getElementById('cb');if(m==='et'){d.style.display='block';b.textContent='تم الدفع - إرسال الطلب'}else{d.style.display='none';b.textContent='إرسال الطلب عبر واتساب'}}
+function copyN(){const n='01151770039';if(navigator.clipboard){navigator.clipboard.writeText(n)}else{const t=document.createElement('textarea');t.value=n;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);}showT('تم نسخ الرقم!');}
+function confPay(){const n=document.getElementById('cn').value;const p=document.getElementById('cp').value;if(!n||!p){showT('اكتب الاسم والتليفون');return;}const tp=cart.reduce((s,x)=>s+(x.p*x.q),0);let m=`🍩 طلب جديد من DONATIKA%0A%0A`;m+=`العميل: ${n}%0A`;m+=`التليفون: ${p}%0A`;if(document.getElementById('ca').value)m+=`العنوان: ${document.getElementById('ca').value}%0A`;m+=`%0Aالطلبات:%0A`;cart.forEach(x=>{m+=`• ${x.n} × ${x.q} = ${x.p*x.q} ج.م%0A`;});m+=`%0Aالإجمالي: ${tp} ج.م%0A`;if(sp==='et'){m+=`%0Aطريقة الدفع: اتصالات كاش ✅%0A`;}else{m+=`%0Aطريقة الدفع: واتساب%0A`;}window.open(`https://wa.me/201152766398?text=${m}`,'_blank');closePay();showSuc();cart=[];upCart();init();document.getElementById('cn').value='';document.getElementById('cp').value='';document.getElementById('ca').value='';}
+function openRes(){document.getElementById('rm').classList.add('show');}
+function closeRes(){document.getElementById('rm').classList.remove('show');}
+function subRes(e){e.preventDefault();const n=document.getElementById('rn').value;const p=document.getElementById('rp').value;const t=document.getElementById('rt').value;const d=document.getElementById('rd').value;const g=document.getElementById('rg').value;const de=document.getElementById('rde').value;const types={birthday:'عيد ميلاد',engagement:'خطوبة',wedding:'فرح',corporate:'شركة',other:'تانية'};let m=`🎂 حجز مناسبة - DONATIKA%0A%0A`;m+=`الاسم: ${n}%0A`;m+=`التليفون: ${p}%0A`;m+=`المناسبة: ${types[t]}%0A`;m+=`التاريخ: ${d}%0A`;m+=`الضيوف: ${g}%0A`;if(de)m+=`تفاصيل: ${de}%0A`;window.open(`https://wa.me/201152766398?text=${m}`,'_blank');closeRes();showSuc();document.getElementById('rn').value='';document.getElementById('rp').value='';document.getElementById('rt').value='';document.getElementById('rd').value='';document.getElementById('rg').value='';document.getElementById('rde').value='';}
+function showT(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000);}
+function showSuc(){document.getElementById('sm').classList.add('show');}
+function closeSuc(){document.getElementById('sm').classList.remove('show');}
+document.getElementById('rd').min=new Date().toISOString().split('T')[0];
+init();
+</script>
 </body>
 </html>
